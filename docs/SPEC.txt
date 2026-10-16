@@ -1,0 +1,62 @@
+LABORATORIO VIRTUAL DE HEMODINAMIA
+Especificación de implementación inicial 0.1
+Base: especificación v1.2 aprobada el 16 de octubre de 2026.
+
+OBJETIVO
+Explorar presión, flujo y función cardíaca mediante experimentos educativos.
+
+ALCANCE APROBADO
+MVP: circulación sistémica y pulmonar, cuatro cámaras, válvulas, cinco controles, indicadores, cuatro gráficas, comparación, tres prácticas, guardado local e informes.
+Evolución: CFD precalculada, circulación 1D, acoplamiento 3D y fluido-estructura.
+Esta entrega implementa una primera porción del MVP; README enumera lo pendiente.
+
+CONTROLES
+Frecuencia: 40–180 lat/min; basal 75.
+Contractilidad izquierda: 25–200 %; basal 100.
+Volumen total: 3000–7000 mL; basal 5000.
+Resistencia sistémica: 40–250 %; basal 100.
+Compliancia arterial: 30–200 %; basal 100.
+
+MODELO
+Ocho compartimentos, conservación de volumen, resistencias y compliancias.
+Ventrículos con elastancia variable, aurículas pasivas, válvulas unidireccionales.
+Modelo documentado en MODELO.md.
+Sin barorreflejo ni intercambio gaseoso.
+
+PRÁCTICAS
+Resistencia al 150 % y al 70 %, contractilidad al 60 %, retirada de 500 mL.
+Objetivo final de retirada: 30 segundos simulados.
+Requerir predicción, comparación, interpretación y conclusión.
+
+INDICADORES
+Gasto, volumen sistólico, presión sistólica/diastólica/media, presión auricular derecha, volúmenes telediastólico/telesistólico y fracción de eyección.
+
+ACEPTACIÓN DEL MVP COMPLETO
+Tres prácticas completas y exportables.
+Estado reproducible tras pausa y restauración.
+Referencia inmutable.
+Deriva de volumen <0,1 % durante diez minutos.
+Variación <1 % al reducir a la mitad el paso máximo.
+Basal: 75 lat/min; 120 ±10/80 ±10 mmHg; gasto 5 ±0,5 L/min.
+Revisión fisiológica y recorrido por teclado.
+Guardado local y errores comprensibles.
+
+NAVIER–STOKES
+div(u)=0
+rho*(du/dt+(u·grad)u)=-grad(p)+mu*laplaciano(u)+f
+Primera ampliación: tubo recto y estenosis, paredes rígidas, sangre newtoniana.
+Verificación: Poiseuille, Womersley, balance de masa, convergencia y condiciones de contorno.
+No representar la animación 0D como campo CFD.
+Balance armónico y redes informadas por física sujetos a validación independiente.
+
+ARQUITECTURA
+React/TypeScript, motor en Web Worker, escenarios versionados, IndexedDB y exportación local.
+Contrato objetivo: INITIALIZE, START, PAUSE, RESET, SET_SPEED, APPLY_PARAMETERS, GET_SNAPSHOT y RESTORE_SNAPSHOT.
+Estado futuro: modelo, escenario, parámetros, eventos, fase, volúmenes, integrador y respuestas.
+
+ENTREGAS
+1. Diseño y definición científica.
+2. Motor y validación numérica.
+3. Interfaz, prácticas, persistencia e informes.
+4. CFD precalculada.
+5. Modelos 1D y 3D.
